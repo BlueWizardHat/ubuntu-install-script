@@ -1,0 +1,4 @@
+---
+  maven_install_path: "{{ javatools_base_path }}/maven"
+  maven_ver: apache-maven-3.6.3
+  maven_tar: "{{ maven_ver }}-bin.tar.gz"

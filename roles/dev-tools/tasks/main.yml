@@ -1,0 +1,32 @@
+---
+  - name: Install Git development tools
+    apt:
+      state: latest
+      name:
+      - git
+      - git-gui
+      - gitk
+      - gitg
+      - tig
+
+  - name: Ensure .git-template exist
+    file: path="/home/{{ user }}/.git-template" state=directory owner={{ user }} group={{ user }}
+
+  - name: Install Git Config
+    copy: src="conf/.gitconfig" dest="/home/{{ user }}/.gitconfig" owner={{ user }} group={{ user }} force=no mode=0644
+
+  - name: Install Git Hooks
+    copy: src="hooks" dest="/home/{{ user }}/.git-template/" owner={{ user }} group={{ user }} force=no mode=0755
+
+  - name: Install other development tools
+    apt:
+      state: latest
+      name:
+      - pv
+      - jq
+      - meld
+      - screen
+      - tmux
+
+  - name: Virtualbox
+    apt: name=virtualbox state=latest

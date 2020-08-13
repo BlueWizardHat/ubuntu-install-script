@@ -1,0 +1,34 @@
+---
+  ## Oracle JDKs
+  oracle_java_install_path: "{{ jdk_base_path }}/oracle"
+  oracle_jdks:
+    - {} # Dummy entry
+    #- { tar: jdk-8u261-linux-x64.tar.gz, creates: jdk1.8.0_261, link: jdk8-latest }
+    #- { tar: jdk-11.0.8_linux-x64_bin.tar.gz, creates: jdk-11.0.8, link: jdk11-latest }
+    #- { tar: jdk-14.0.2_linux-x64_bin.tar.gz, creates: jdk-14.0.2, link: jdk14-latest }
+
+  ## OpenJDK JDKs
+  openjdk_install_path: "{{ jdk_base_path }}/openjdk"
+  openjdk_jdks:
+    - {} # Dummy entry
+    #- { tar: openjdk-9.0.4_linux-x64_bin.tar.gz, creates: jdk-9.0.4, link: jdk9-latest }
+    #- { tar: openjdk-10.0.2_linux-x64_bin.tar.gz, creates: jdk-10.0.2, link: jdk10-latest }
+    #- { tar: openjdk-11.0.2_linux-x64_bin.tar.gz, creates: jdk-11.0.2 }
+    #- { tar: openjdk-12_linux-x64_bin.tar.gz, creates: jdk-12, link: jdk12-latest }
+    - { tar: openjdk-14.0.2_linux-x64_bin.tar.gz, creates: jdk-14.0.2, link: jdk14-latest }
+
+  ## Eclipse Adoptium / AdoptOpenJDK JDKs (hotspot VM)
+  adoptium_hotspot_install_path: "{{ jdk_base_path }}/adoptium"
+  adoptium_hotspot_jdks:
+    - {} # Dummy entry
+    - { tar: OpenJDK8U-jdk_x64_linux_hotspot_8u265b01.tar.gz, creates: jdk8u265-b01, link: jdk8-latest }
+    - { tar: OpenJDK11U-jdk_x64_linux_hotspot_11.0.8_10.tar.gz, creates: jdk-11.0.8+10, link: jdk11-latest }
+    - { tar: OpenJDK14U-jdk_x64_linux_hotspot_14.0.2_12.tar.gz, creates: jdk-14.0.2+12, link: jdk14-latest, default: true }
+
+  ## Eclipse Adoptium / AdoptOpenJDK JDKs (openj9 VM)
+  adoptium_j9_install_path: "{{ jdk_base_path }}/adoptium-j9"
+  adoptium_j9_jdks:
+    - {} # Dummy entry
+    #- { tar: OpenJDK8U-jdk_x64_linux_openj9_8u265b01_openj9-0.21.0.tar.gz, creates: jdk8u265-b01, link: jdk8-latest }
+    #- { tar: OpenJDK11U-jdk_x64_linux_openj9_11.0.8_10_openj9-0.21.0.tar.gz, creates: jdk-11.0.8+10, link: jdk11-latest }
+    #- { tar: OpenJDK14U-jdk_x64_linux_openj9_14.0.2_12_openj9-0.21.0.tar.gz, creates: jdk-14.0.2+12, link: jdk14-latest }

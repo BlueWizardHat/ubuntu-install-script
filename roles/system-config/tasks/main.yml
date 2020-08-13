@@ -1,0 +1,19 @@
+---
+  - name: Enable ufw
+    ufw: state=enabled
+
+  - name: Setup /tmp as a ramdisk
+    lineinfile:
+      dest: /etc/fstab
+      regexp: "/tmp"
+      line: "tmpfs          /tmp                    tmpfs   size=2048m,nosuid,nodev,noatime,mode=1777       0 0"
+
+  - name: Install chrony
+    apt: name=chrony state=latest
+
+  - name: Install support for exfat
+    apt:
+      state: latest
+      name:
+      - exfat-fuse
+      - exfat-utils

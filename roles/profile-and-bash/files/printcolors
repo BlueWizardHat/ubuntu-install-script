@@ -1,0 +1,36 @@
+
+echo -e "        \e[0;38m  Normal       \e[1;38m Bold         \e[0;38m  Background   \e[0m  \e[0;38m  BG Bold      \e[0m"
+echo -e "Color 0 \e[0;30m  Lorem Ipsum  \e[1;30m Lorem Ipsum  \e[0;40m  Lorem Ipsum  \e[0m  \e[1;40m  Lorem Ipsum  \e[0m"
+echo -e "Color 1 \e[0;31m  Lorem Ipsum  \e[1;31m Lorem Ipsum  \e[0;41m  Lorem Ipsum  \e[0m  \e[1;41m  Lorem Ipsum  \e[0m"
+echo -e "Color 2 \e[0;32m  Lorem Ipsum  \e[1;32m Lorem Ipsum  \e[0;42m  Lorem Ipsum  \e[0m  \e[1;42m  Lorem Ipsum  \e[0m"
+echo -e "Color 3 \e[0;33m  Lorem Ipsum  \e[1;33m Lorem Ipsum  \e[0;43m  Lorem Ipsum  \e[0m  \e[1;43m  Lorem Ipsum  \e[0m"
+echo -e "Color 4 \e[0;34m  Lorem Ipsum  \e[1;34m Lorem Ipsum  \e[0;44m  Lorem Ipsum  \e[0m  \e[1;44m  Lorem Ipsum  \e[0m"
+echo -e "Color 5 \e[0;35m  Lorem Ipsum  \e[1;35m Lorem Ipsum  \e[0;45m  Lorem Ipsum  \e[0m  \e[1;45m  Lorem Ipsum  \e[0m"
+echo -e "Color 6 \e[0;36m  Lorem Ipsum  \e[1;36m Lorem Ipsum  \e[0;46m  Lorem Ipsum  \e[0m  \e[1;46m  Lorem Ipsum  \e[0m"
+echo -e "Color 7 \e[0;37m  Lorem Ipsum  \e[1;37m Lorem Ipsum  \e[0;47m  Lorem Ipsum  \e[0m  \e[1;47m  Lorem Ipsum  \e[0m"
+echo -e "Color 8 \e[0;38m  Lorem Ipsum  \e[1;38m Lorem Ipsum  \e[0;48m  Lorem Ipsum  \e[0m  \e[1;48m  Lorem Ipsum  \e[0m"
+
+echo
+echo -e "        \e[48m  \e[38m  Color 0      \e[38m  Color 1      \e[38m  Color 2      \e[38m  Color 3      \e[38m  Color 4      \e[38m  Color 5      \e[38m  Color 6      \e[38m  Color 7      \e[38m  Color 8      \e[0m"
+echo
+
+echo -e "Color 0 \e[40m  \e[30m  Lorem Ipsum  \e[31m  Lorem Ipsum  \e[32m  Lorem Ipsum  \e[33m  Lorem Ipsum  \e[34m  Lorem Ipsum  \e[35m  Lorem Ipsum  \e[36m  Lorem Ipsum  \e[37m  Lorem Ipsum  \e[38m  Lorem Ipsum  \e[0m"
+echo -e "Color 1 \e[41m  \e[30m  Lorem Ipsum  \e[31m  Lorem Ipsum  \e[32m  Lorem Ipsum  \e[33m  Lorem Ipsum  \e[34m  Lorem Ipsum  \e[35m  Lorem Ipsum  \e[36m  Lorem Ipsum  \e[37m  Lorem Ipsum  \e[38m  Lorem Ipsum  \e[0m"
+echo -e "Color 2 \e[42m  \e[30m  Lorem Ipsum  \e[31m  Lorem Ipsum  \e[32m  Lorem Ipsum  \e[33m  Lorem Ipsum  \e[34m  Lorem Ipsum  \e[35m  Lorem Ipsum  \e[36m  Lorem Ipsum  \e[37m  Lorem Ipsum  \e[38m  Lorem Ipsum  \e[0m"
+echo -e "Color 3 \e[43m  \e[30m  Lorem Ipsum  \e[31m  Lorem Ipsum  \e[32m  Lorem Ipsum  \e[33m  Lorem Ipsum  \e[34m  Lorem Ipsum  \e[35m  Lorem Ipsum  \e[36m  Lorem Ipsum  \e[37m  Lorem Ipsum  \e[38m  Lorem Ipsum  \e[0m"
+echo -e "Color 4 \e[44m  \e[30m  Lorem Ipsum  \e[31m  Lorem Ipsum  \e[32m  Lorem Ipsum  \e[33m  Lorem Ipsum  \e[34m  Lorem Ipsum  \e[35m  Lorem Ipsum  \e[36m  Lorem Ipsum  \e[37m  Lorem Ipsum  \e[38m  Lorem Ipsum  \e[0m"
+echo -e "Color 5 \e[45m  \e[30m  Lorem Ipsum  \e[31m  Lorem Ipsum  \e[32m  Lorem Ipsum  \e[33m  Lorem Ipsum  \e[34m  Lorem Ipsum  \e[35m  Lorem Ipsum  \e[36m  Lorem Ipsum  \e[37m  Lorem Ipsum  \e[38m  Lorem Ipsum  \e[0m"
+echo -e "Color 6 \e[46m  \e[30m  Lorem Ipsum  \e[31m  Lorem Ipsum  \e[32m  Lorem Ipsum  \e[33m  Lorem Ipsum  \e[34m  Lorem Ipsum  \e[35m  Lorem Ipsum  \e[36m  Lorem Ipsum  \e[37m  Lorem Ipsum  \e[38m  Lorem Ipsum  \e[0m"
+echo -e "Color 7 \e[47m  \e[30m  Lorem Ipsum  \e[31m  Lorem Ipsum  \e[32m  Lorem Ipsum  \e[33m  Lorem Ipsum  \e[34m  Lorem Ipsum  \e[35m  Lorem Ipsum  \e[36m  Lorem Ipsum  \e[37m  Lorem Ipsum  \e[38m  Lorem Ipsum  \e[0m"
+
+echo
+echo -e "Color 0 \e[1;40m  \e[30m  Lorem Ipsum  \e[31m  Lorem Ipsum  \e[32m  Lorem Ipsum  \e[33m  Lorem Ipsum  \e[34m  Lorem Ipsum  \e[35m  Lorem Ipsum  \e[36m  Lorem Ipsum  \e[37m  Lorem Ipsum  \e[38m  Lorem Ipsum  \e[0m"
+echo -e "Color 1 \e[1;41m  \e[30m  Lorem Ipsum  \e[31m  Lorem Ipsum  \e[32m  Lorem Ipsum  \e[33m  Lorem Ipsum  \e[34m  Lorem Ipsum  \e[35m  Lorem Ipsum  \e[36m  Lorem Ipsum  \e[37m  Lorem Ipsum  \e[38m  Lorem Ipsum  \e[0m"
+echo -e "Color 2 \e[1;42m  \e[30m  Lorem Ipsum  \e[31m  Lorem Ipsum  \e[32m  Lorem Ipsum  \e[33m  Lorem Ipsum  \e[34m  Lorem Ipsum  \e[35m  Lorem Ipsum  \e[36m  Lorem Ipsum  \e[37m  Lorem Ipsum  \e[38m  Lorem Ipsum  \e[0m"
+echo -e "Color 3 \e[1;43m  \e[30m  Lorem Ipsum  \e[31m  Lorem Ipsum  \e[32m  Lorem Ipsum  \e[33m  Lorem Ipsum  \e[34m  Lorem Ipsum  \e[35m  Lorem Ipsum  \e[36m  Lorem Ipsum  \e[37m  Lorem Ipsum  \e[38m  Lorem Ipsum  \e[0m"
+echo -e "Color 4 \e[1;44m  \e[30m  Lorem Ipsum  \e[31m  Lorem Ipsum  \e[32m  Lorem Ipsum  \e[33m  Lorem Ipsum  \e[34m  Lorem Ipsum  \e[35m  Lorem Ipsum  \e[36m  Lorem Ipsum  \e[37m  Lorem Ipsum  \e[38m  Lorem Ipsum  \e[0m"
+echo -e "Color 5 \e[1;45m  \e[30m  Lorem Ipsum  \e[31m  Lorem Ipsum  \e[32m  Lorem Ipsum  \e[33m  Lorem Ipsum  \e[34m  Lorem Ipsum  \e[35m  Lorem Ipsum  \e[36m  Lorem Ipsum  \e[37m  Lorem Ipsum  \e[38m  Lorem Ipsum  \e[0m"
+echo -e "Color 6 \e[1;46m  \e[30m  Lorem Ipsum  \e[31m  Lorem Ipsum  \e[32m  Lorem Ipsum  \e[33m  Lorem Ipsum  \e[34m  Lorem Ipsum  \e[35m  Lorem Ipsum  \e[36m  Lorem Ipsum  \e[37m  Lorem Ipsum  \e[38m  Lorem Ipsum  \e[0m"
+echo -e "Color 7 \e[1;47m  \e[30m  Lorem Ipsum  \e[31m  Lorem Ipsum  \e[32m  Lorem Ipsum  \e[33m  Lorem Ipsum  \e[34m  Lorem Ipsum  \e[35m  Lorem Ipsum  \e[36m  Lorem Ipsum  \e[37m  Lorem Ipsum  \e[38m  Lorem Ipsum  \e[0m"
+
+echo

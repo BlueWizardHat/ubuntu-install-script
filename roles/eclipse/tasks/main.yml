@@ -1,0 +1,41 @@
+---
+  - name: Ensure eclipse installation directory exists
+    file: path="{{ eclipse_install_path }}" state=directory owner=root group=root
+
+  - name: Check if eclipse is already installed
+    stat: path="{{ eclipse_install_path }}/{{ eclipse_ver }}"
+    register: eclipse
+
+  - name: Unpack eclipse
+    unarchive: copy=no src="{{ binary_dir }}/{{ eclipse_tar }}" dest="{{ eclipse_install_path }}" creates="{{ eclipse_install_path }}/eclipse" owner={{ user }} group={{ user }}
+    when: eclipse.stat.isdir is not defined
+
+  - name: Rename eclipse
+    shell: mv "{{ eclipse_install_path }}/eclipse" "{{ eclipse_install_path }}/{{ eclipse_ver }}"
+    when: eclipse.stat.isdir is not defined
+
+  - name: Install lombok
+    shell: "{{ jdk_base_path }}/default-jdk/bin/java -jar {{ binary_dir }}/{{ lombok_jar }} install {{ eclipse_install_path }}/{{ eclipse_ver }}"
+    register: lombok
+
+  - debug: var=lombok.stdout
+
+  - name: Create eclipse dir symlink
+    file: src="{{ eclipse_ver }}" dest="{{ eclipse_install_path }}/latest" state=link
+
+  - name: Create eclipse icon symlink
+    file: src="{{ eclipse_ver }}/icon.xpm" dest="{{ eclipse_install_path }}/icon.xpm" state=link
+
+  - name: Create eclipse binary symlink
+    file: src="{{ eclipse_install_path }}/latest/eclipse" dest="/home/{{ user }}/.local/bin/eclipse" state=link owner=root group=root
+    ignore_errors: yes
+
+  - name: Correct owner of .local
+    shell: "chown -R {{ user }}. /home/{{ user }}/.local"
+    args:
+      warn: false
+    ignore_errors: yes
+
+  - name: Install starteclipse script
+    copy: src="starteclipse" dest="/home/{{ user }}/bin/shell/starteclipse" owner={{ user }} group={{ user }} force=no mode=0755
+    ignore_errors: yes

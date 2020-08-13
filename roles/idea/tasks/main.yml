@@ -1,0 +1,27 @@
+---
+  # - name: Ensure idea installation directory exists
+  #   file: path="{{ idea_install_path }}" state=directory owner=root group=root
+
+  # - name: Check if idea is already installed
+  #   stat: path="{{ idea_install_path }}/{{ idea_ver }}"
+  #   register: idea
+
+  # - name: Unpack idea
+  #   unarchive: copy=no src="{{ binary_dir }}/{{ idea_tar }}" dest="{{ idea_install_path }}" creates="{{ idea_install_path }}/{{ idea_ver }}" owner={{ user }} group={{ user }}
+  #   when: idea.stat.isdir is not defined
+  #   register: unpacked.changed
+
+  # - name: Create idea dir symlink
+  #   file: src="{{ idea_install_path }}/{{ idea_ver }}" dest="{{ idea_install_path }}/current" state=link
+
+  # - name: Create idea.sh symlink
+  #   file: src="{{ idea_install_path }}/current/bin/idea.sh" dest="/home/{{ user }}/.local/bin/idea.sh" state=link owner={{ user }} group={{ user }}
+  #   ignore_errors: yes
+
+  # - name: Change owner of idea
+  #   shell: "chown -R {{ user }}. {{ idea_install_path }}/{{ idea_ver }}"
+  #   ignore_errors: yes
+
+  - name: Install IntelliJ IDEA
+    shell: snap install intellij-idea-community --classic
+

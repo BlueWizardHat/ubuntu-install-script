@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+PROJECT_NAME="$1"
+VMARGS="-vmargs -Xmx2048m"
+
+if [ -z "$PROJECT_NAME" ]; then
+	echo "Usage: ${0##*/} <project_name>"
+	exit 1
+fi
+
+ECLIPSE_PATH="$(readlink -e ~/.local/bin/eclipse)"
+if [ ! -f "$ECLIPSE_PATH" ]; then
+	echo "Eclipse binary not found"
+	exit 1
+fi
+
+
+PROJECT_PATH="$HOME/Projects/$PROJECT_NAME"
+if [ ! -d "$PROJECT_PATH" ]; then
+	PROJECT_PATH="$(readlink -e $1)"
+fi
+
+if [ ! -d "$PROJECT_PATH" ]; then
+	PROJECT_PATH="$HOME/Projects/$PROJECT_NAME"
+	echo -n "'$PROJECT_PATH' does not exist. Create it (y/n) ? "
+	read line
+	if [[ ! "$line" =~ ^[yY]([eE][sS]?)?$ ]]; then
+		exit 1
+	fi
+fi
+
+WORKSPACE=".workspace"
+CONFIG_DIR="$WORKSPACE/configuration"
+LOGFILE="eclipse.log"
+
+mkdir -p "$PROJECT_PATH"
+cd "$PROJECT_PATH"
+mkdir -p "$WORKSPACE" "$CONFIG_DIR"
+
+echo "Using $PROJECT_PATH"
+nohup "$ECLIPSE_PATH" -configuration "$CONFIG_DIR" -data "$WORKSPACE" "$VMARGS" > "$LOGFILE" 2>&1 &

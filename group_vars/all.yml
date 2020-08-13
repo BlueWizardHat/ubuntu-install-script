@@ -1,0 +1,6 @@
+---
+  binary_dir: /home/{{ user }}/Downloads/ansible-install
+  java_base_path: /opt/java
+  jdk_base_path: /opt/java/jdks
+  javatools_base_path: /opt/java/tools
+

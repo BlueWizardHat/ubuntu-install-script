@@ -1,0 +1,29 @@
+---
+  - name: Ensure gradle installation directory exists
+    file: path="{{ gradle_install_path }}" state=directory owner=root group=root
+
+  - name: Ensure gradle conf dir exists
+    file: path="/home/{{ user }}/.gradle" state=directory owner={{ user }} group={{ user }}
+
+  - name: Configure daemon off
+    lineinfile:
+      owner: "{{ user }}"
+      group: "{{ user }}"
+      create: yes
+      dest: /home/{{ user }}/.gradle/gradle.properties
+      regexp: "org.gradle.daemon"
+      line: "org.gradle.daemon=false"
+
+  - name: Unpack gradle
+    unarchive: copy=no src="{{ binary_dir }}/{{ gradle_zip }}" dest="{{ gradle_install_path }}" creates="{{ gradle_install_path }}/{{ gradle_ver }}" owner=root group=root
+
+  - name: Create gradle symlink
+    file: src="{{ gradle_ver }}" dest="{{ gradle_install_path }}/latest" state=link
+
+  - name: Ensure java/bin directory exists
+    file: path="/home/{{ user }}/.local/bin" state=directory owner={{ user }} group={{ user }}
+
+  - name: Create binary symlinks
+    file: src="{{ gradle_install_path }}/latest/bin/{{ item }}" dest="/home/{{ user }}/.local/bin/{{ item }}" state=link owner={{ user }} group={{ user }}
+    with_items:
+      - gradle

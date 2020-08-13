@@ -1,0 +1,5 @@
+---
+  idea_install_path: "{{ java_base_path }}/idea"
+
+  idea_ver: idea-IC-191.6183.87
+  idea_tar: ideaIC-2019.1-no-jbr.tar.gz

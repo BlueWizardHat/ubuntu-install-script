@@ -1,0 +1,67 @@
+---
+  - name: Ensure java installation directories exists
+    file: path="{{ item }}" state=directory owner=root group=root
+    with_items:
+      - "{{ oracle_java_install_path }}"
+      - "{{ openjdk_install_path }}"
+      - "{{ adoptium_hotspot_install_path }}"
+      - "{{ adoptium_j9_install_path }}"
+
+  ## Oracle JDKs
+
+  - name: Unpack Oracle JDKs
+    unarchive: copy=no src="{{ binary_dir }}/{{ item.tar }}" dest="{{ oracle_java_install_path }}" creates="{{ oracle_java_install_path }}/{{ item.creates }}" owner=root group=root
+    with_items: "{{ oracle_jdks }}"
+    when: item.creates is defined and item.tar is defined
+
+  - name: Create symlinks for Oracle JDKs
+    file: src="{{ item.creates }}" dest="{{ oracle_java_install_path }}/{{ item.link }}" state=link
+    with_items: "{{ oracle_jdks }}"
+    when: item.link is defined
+
+  ## OpenJDK JDKs
+
+  - name: Unpack openjdk JDKs
+    unarchive: copy=no src="{{ binary_dir }}/{{ item.tar }}" dest="{{ openjdk_install_path }}" creates="{{ openjdk_install_path }}/{{ item.creates }}" owner=root group=root
+    with_items: "{{ openjdk_jdks }}"
+    when: item.creates is defined and item.tar is defined
+
+  - name: Create symlinks for openjdk JDKs
+    file: src="{{ item.creates }}" dest="{{ openjdk_hotspot_install_path }}/{{ item.link }}" state=link
+    with_items: "{{ hotspot_jdks }}"
+    when: item.link is defined
+
+  ## Eclipse Adoptium / AdoptOpenJDK JDKs (hotspot VM)
+
+  - name: Unpack Adoptium hotspot JDKs
+    unarchive: copy=no src="{{ binary_dir }}/{{ item.tar }}" dest="{{ adoptium_hotspot_install_path }}" creates="{{ adoptium_hotspot_install_path }}/{{ item.creates }}" owner=root group=root
+    with_items: "{{ adoptium_hotspot_jdks }}"
+    when: item.creates is defined and item.tar is defined
+
+  - name: Create Adoptium hotspot symlinks
+    file: src="{{ item.creates }}" dest="{{ adoptium_hotspot_install_path }}/{{ item.link }}" state=link
+    with_items: "{{ adoptium_hotspot_jdks }}"
+    when: item.link is defined
+
+  - name: Create adoptopenjdk symlink
+    file: src="adoptium" dest="{{ jdk_base_path }}/adoptopenjdk" state=link
+
+  - name: Create symlink for default jdk
+    file: src="{{ adoptium_hotspot_install_path }}/{{ item.creates }}" dest="{{ jdk_base_path }}/default-jdk" state=link
+    with_items: "{{ adoptium_hotspot_jdks }}"
+    when: item.link is defined and item.default is defined and item.default
+
+  ## Eclipse Adoptium / AdoptOpenJDK JDKs (openj9 VM)
+
+  - name: Unpack Adoptium openj9 JDKs
+    unarchive: copy=no src="{{ binary_dir }}/{{ item.tar }}" dest="{{ adoptium_j9_install_path }}" creates="{{ adoptium_j9_install_path }}/{{ item.creates }}" owner=root group=root
+    with_items: "{{ adoptium_j9_jdks }}"
+    when: item.creates is defined and item.tar is defined
+
+  - name: Create Adoptium openj9 symlinks
+    file: src="{{ item.creates }}" dest="{{ adoptium_j9_install_path }}/{{ item.link }}" state=link
+    with_items: "{{ adoptium_j9_jdks }}"
+    when: item.link is defined
+
+  - name: Create adoptopenjdk symlink
+    file: src="adoptium-j9" dest="{{ jdk_base_path }}/adoptopenjdk-j9" state=link

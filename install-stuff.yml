@@ -1,0 +1,18 @@
+---
+  - hosts: localhost
+    connection: local
+    become: yes
+
+    roles:
+      - system-config
+      - disable-guest
+      - profile-and-bash
+      - desktop-software
+      - samba-utils
+      - dev-tools
+      - docker
+      - java-jdks
+      - maven
+      - gradle
+      - eclipse
+      - idea

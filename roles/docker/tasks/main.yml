@@ -1,0 +1,48 @@
+---
+  - name: Install prerequisites
+    apt:
+      state: latest
+      name:
+      - "apt-transport-https"
+      - "ca-certificates"
+      - "curl"
+      - "software-properties-common"
+
+  - name: Import docker repo key
+    shell: "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -"
+    args:
+      warn: false
+
+  - name: Install docker repository
+    copy: src=docker.list dest=/etc/apt/sources.list.d/docker.list
+    register: dockerrepo
+
+  - name: Update repository
+    apt: update_cache=yes
+    when: dockerrepo.changed
+
+  - name: Install docker
+    apt:
+      state: latest
+      name:
+      - "docker-ce"
+
+  - name: Install docker-compose
+    get_url:
+      url: https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-Linux-x86_64
+      dest: /usr/local/bin/docker-compose
+      mode: "0755"
+      checksum: "sha256:{{ docker_compose_sha }}"
+
+  - name: Ensure docker group exists
+    group: name=docker state=present system=yes
+    notify: Restart docker daemon
+
+  - meta: flush_handlers
+
+  # Adding the user to the docker group so the user can execute docker without sudo
+  # requires logging out and in again if user was not part of the group previously
+  # Note this fails with a centrify user
+  - name: Add user to docker group
+    user: name="{{ user }}" groups=docker append=yes
+    ignore_errors: yes

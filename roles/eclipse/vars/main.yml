@@ -1,0 +1,7 @@
+---
+  eclipse_install_path: "/home/{{ user}}/.eclipse-bin"
+
+  eclipse_ver: eclipse-java-2020-06-R-linux-gtk-x86_64
+  eclipse_tar: "{{ eclipse_ver }}.tar.gz"
+  lombok_ver: "1.18.12"
+  lombok_jar: "lombok-{{ lombok_ver }}.jar"

@@ -1,0 +1,110 @@
+---
+  - name: Install common desktop software
+    apt:
+      state: latest
+      name:
+      - guake
+      - rxvt-unicode-256color
+      - terminator
+      - vlc
+      - devilspie2
+
+  - name: Ensure some config directories exist
+    file: path="/home/{{ user }}/.config/{{ item }}" state=directory owner={{ user }} group={{ user }}
+    with_items:
+      - "autostart"
+      - "devilspie2"
+      - "terminator"
+
+  - name: Install Devilspie2 config
+    template: src="window_rules.lua" dest="/home/{{ user }}/.config/devilspie2/window_rules.lua" owner={{ user }} group={{ user }} mode=0644
+
+  - name: Install Terminator configs
+    template: src="{{ item.src }}" dest="/home/{{ user }}/.config/terminator/{{ item.dest }}" owner={{ user }} group={{ user }} mode=0644
+    with_items:
+      - { src: "terminator_config", dest: "config" }
+      - { src: "terminator_config_guake", dest: "config_guake" }
+
+  - name: Install Chromium browser
+    apt: name=chromium-browser state=latest
+
+  - name: Install Discord
+    shell: snap install discord
+
+  - name: Install common commandline utilities
+    apt:
+      state: latest
+      name:
+      - vim-nox
+      - p7zip-full
+      - p7zip-rar
+      - most
+      - htop
+      - anacron
+      - at
+      - unzip
+      - curl
+      - tree
+      - pigz
+      - pbzip2
+      - lbzip2
+
+  - name: Install Keepass2
+    apt:
+      state: latest
+      name:
+      - xdotool
+      - keepass2
+
+  - name: Install some usefull scripts
+    template: src="{{ item }}" dest="/home/{{ user }}/bin/shell/{{ item }}" owner={{ user }} group={{ user }} mode=0755
+    ignore_errors: yes
+    with_items:
+      - "keepass2autotype.sh"
+
+  - name: Make stuff run at startup
+    template: src="{{ item }}" dest="/home/{{ user }}/.config/autostart/{{ item }}" owner={{ user }} group={{ user }}
+    with_items:
+      - "Guake.desktop"
+      - "Devilspie2.desktop"
+      - "Keepass2.desktop"
+
+  - name: Install vital tools that no one can live without
+    apt:
+      state: latest
+      name:
+      - sl
+      - cowsay
+      - ddate
+      - lolcat
+      - fortune-mod
+      - fortunes
+      - fortunes-min
+      - fortunes-off
+      - fortunes-spam
+      - fortunes-ubuntu-server
+
+  - name: Install Graphics programs
+    apt:
+      state: latest
+      name:
+      - gimp
+      - pinta
+
+  - name: Tar alias for multicore gzip
+    lineinfile:
+      owner: "{{ user }}"
+      group: "{{ user }}"
+      create: yes
+      dest: /home/{{ user }}/.bash_aliases
+      regexp: "targz"
+      line: alias targz='tar -I pigz'
+
+  - name: Tar alias for multicore bzip2
+    lineinfile:
+      owner: "{{ user }}"
+      group: "{{ user }}"
+      create: yes
+      dest: /home/{{ user }}/.bash_aliases
+      regexp: "tarbz2"
+      line: alias tarbz2='tar -I lbzip2'

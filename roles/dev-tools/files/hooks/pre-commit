@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Execute
+# 	mkdir -p ~/.git_template/hooks
+# 	git config --global init.templatedir '~/.git_template'
+#
+# Now copy this file into ~/.git_template/hooks/
+#
+# Every git repo you clone or create from now on will have this hook
+# for existing repos you will need to run "git init" in the repos.
+
+if git_branch=$(git symbolic-ref --short -q HEAD 2> /dev/null); then
+	if [ "$git_branch" == "master" ]; then
+		echo "You are committing on master!"
+		exit 1
+	fi
+fi

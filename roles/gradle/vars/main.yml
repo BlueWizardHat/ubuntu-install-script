@@ -1,0 +1,5 @@
+---
+  gradle_install_path: "{{ javatools_base_path }}/gradle"
+
+  gradle_ver: gradle-6.5.1
+  gradle_zip: "{{ gradle_ver }}-all.zip"

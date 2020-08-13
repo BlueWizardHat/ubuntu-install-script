@@ -1,0 +1,19 @@
+---
+  - name: Ensure maven installation directory exists
+    file: path="{{ maven_install_path }}" state=directory owner=root group=root
+
+  - name: Unpack maven
+    unarchive: copy=no src="{{ binary_dir }}/{{ maven_tar }}" dest="{{ maven_install_path }}" creates="{{ maven_install_path }}/{{ maven_ver }}" owner=root group=root
+
+  - name: Create maven symlink
+    file: src="{{ maven_ver }}" dest="{{ maven_install_path }}/latest" state=link
+
+  - name: Ensure java/bin directory exists
+    file: path="/home/{{ user }}/.local/bin" state=directory owner={{ user }} group={{ user }}
+
+  - name: Create binary symlinks
+    file: src="{{ maven_install_path }}/latest/bin/{{ item }}" dest="/home/{{ user }}/.local/bin/{{ item }}" state=link owner={{ user }} group={{ user }}
+    with_items:
+      - mvn
+      # - mvnDebug
+      # - mvnyjp

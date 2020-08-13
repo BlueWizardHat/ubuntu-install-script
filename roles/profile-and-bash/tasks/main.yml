@@ -1,0 +1,123 @@
+---
+  - name: Generate locales
+    command: locale-gen da_DK.UTF-8 en_US.UTF-8 en_DK.UTF-8
+
+  - name: Setup Locales in .profile
+    blockinfile:
+      dest: /home/{{ user }}/.profile
+      marker: "# {mark} - Locales and ansible - ANSIBLE MANAGED"
+      block: |
+        # Set locale
+        export LANG="en_DK.UTF-8"
+        export LANGUAGE="en_US:en"
+        export LC_MESSAGES="en_US.UTF-8"
+        export LC_CTYPE="en_US.UTF-8"
+        export LC_COLLATE="en_US.UTF-8"
+        export ANSIBLE_NOCOWS=1
+        export EDITOR=nano
+        export PAGER=most
+
+  - name: Ensure some user directories exist
+    file: path="/home/{{ user }}/{{ item }}" state=directory owner={{ user }} group={{ user }}
+    with_items:
+      - "bin/shell"
+      - ".local/bin"
+
+  - name: Put ~/bin/shell in PATH
+    blockinfile:
+      dest: /home/{{ user }}/.profile
+      marker: "# {mark} - bin/shell - ANSIBLE MANAGED"
+      block: |
+        if [ "$TERM" != "screen" ]; then
+          # set PATH so it includes user's private bin if it exists
+          if [ -d "${HOME}/bin/shell" ] ; then
+              PATH="${HOME}/bin/shell:$PATH"
+          fi
+        fi
+
+  - name: Setup Java paths in .profile
+    blockinfile:
+      dest: /home/{{ user }}/.profile
+      marker: "# {mark} - Java Paths - ANSIBLE MANAGED"
+      block: |
+        if [ "$TERM" != "screen" ]; then
+          # Java app development
+          JAVA_SOFTWARE="/opt/java"
+
+          JAVA_HOME_LN="$JAVA_SOFTWARE/jdks/default-jdk"
+          if [ -d "$JAVA_HOME_LN" ]; then
+            export JAVA_HOME=$(readlink -f $JAVA_HOME_LN)
+            PATH="$JAVA_HOME/bin:$PATH"
+          fi
+
+          ## Gradle build system
+          GRADLE_HOME_LN="$JAVA_SOFTWARE/tools/gradle/latest"
+          if [ -d "$GRADLE_HOME_LN" ]; then
+            export GRADLE_HOME=$(readlink -f $GRADLE_HOME_LN)
+            export GRADLE_OPTS="-Dorg.gradle.daemon=false"
+          fi
+
+          # Maven build system
+          M2_HOME_LN="$JAVA_SOFTWARE/tools/maven/latest"
+          if [ -d "$M2_HOME_LN" ]; then
+            export M2_HOME=$(readlink -f $M2_HOME_LN)
+          fi
+        fi
+
+  - name: Install git prompt hook for bash
+    copy: src={{ item }} dest=/home/{{ user }}/.{{ item }} owner={{ user }} group={{ user }}
+    with_items:
+      - "bash-git-prompt-hook.sh"
+
+  - name: Put useful scripts in ~/bin/shell
+    copy: src={{ item }} dest=/home/{{ user }}/bin/shell/{{ item }} owner={{ user }} group={{ user }} mode=0755
+    with_items:
+      - "jset.sh"
+      - "printcolors"
+
+  - name: Setup bash prompt
+    blockinfile:
+      dest: /home/{{ user }}/.bashrc
+      marker: "# {mark} - Bash Prompt - ANSIBLE MANAGED"
+      block: |
+        BASH_GIT_HOOK=${HOME}/.bash-git-prompt-hook.sh
+        if [ -f $BASH_GIT_HOOK ]; then
+            . $BASH_GIT_HOOK || true
+        fi
+
+        # A colorful prompt
+        exit_code() {
+          local status=$?
+          if [ $status -eq 0 ]; then
+            echo -e "\e[0;32m$status"
+          else
+            echo -e "\e[0;31m$status"
+          fi
+        }
+        PS1='\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\e[0;34m\]| $(exit_code) \[\e[0;33m\]\t \[\e[0;31m\]${JAVA_HOME##*/} \[\e[0;33m\]\w\n\[\e[0;34m\]| \[\e[0;32m\]\u\[\e[0;34m\]@\[\e[0;32m\]\h \[\e[01;33m\]\$\[\e[0m\] '
+
+        if [ "$USER" != "root" ]; then
+          cowfile=$(ls /usr/share/cowsay/cows/ | shuf -n1)
+          echo -e "\n$(uname -srvm)\n$(lsb_release -sd) ($(lsb_release -sc))\n\n$(ddate)\nUptime: $(uptime)\n$(/usr/games/fortune -sa | /usr/games/cowsay -W100 -f $cowfile)              $cowfile\n" | /usr/games/lolcat
+        else
+          echo -e "\n$(uname -srvm)\n$(lsb_release -sd) ($(lsb_release -sc))\n\nUptime: $(uptime)\n\n" | /usr/games/lolcat
+          echo -e "\e[1;31m       <<<>>> \e[1;33mLogged in as root on $(hostname)! \e[1;31m<<<>>>\e[0m\n\n"
+        fi
+
+  - name: Create jset alias
+    lineinfile:
+      owner: "{{ user }}"
+      group: "{{ user }}"
+      create: yes
+      dest: /home/{{ user }}/.bash_aliases
+      regexp: "alias jset"
+      line: alias jset='. jset.sh'
+
+  - name: Create docker images clean alias
+    lineinfile:
+      owner: "{{ user }}"
+      group: "{{ user }}"
+      create: yes
+      dest: /home/{{ user }}/.bash_aliases
+      regexp: "dockclean"
+      line: alias dockclean='docker system prune -f && docker volume prune -f'

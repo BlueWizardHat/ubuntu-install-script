@@ -1,0 +1,7 @@
+---
+  - name: Samba utils
+    apt:
+      state: latest
+      name:
+      - cifs-utils
+      - smbclient
