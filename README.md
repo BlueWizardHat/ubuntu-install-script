@@ -27,6 +27,8 @@ Once things are downloaded start by updating your installation with
 
 Then run the install-stuff.sh script and all will be installed.
 
+Note that after the first time these scripts are run you will need to reboot for all the changes to take effect.
+
 
 ## Java JDKs and Tools
 
