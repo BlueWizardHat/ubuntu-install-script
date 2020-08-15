@@ -1,0 +1,14 @@
+---
+  - name: Import vivaldi repo key
+    shell: "curl -fsSL http://repo.vivaldi.com/stable/linux_signing_key.pub | sudo apt-key add -"
+    args:
+      warn: false
+
+  - name: Add vivaldi repo
+    shell: "add-apt-repository 'deb [arch=amd64] http://repo.vivaldi.com/archive/deb/ stable main'"
+
+  - name: Install vivaldi browser
+    apt:
+      state: latest
+      name:
+      - "vivaldi-stable"

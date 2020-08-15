@@ -8,6 +8,7 @@
       - disable-guest
       - profile-and-bash
       - desktop-software
+      - vivaldi-browser
       - samba-utils
       - dev-tools
       - docker

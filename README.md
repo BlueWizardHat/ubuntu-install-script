@@ -8,6 +8,7 @@ This is an anonimized version of the script that I use when setting up a new ubu
 
 * Installs all the programs and dev-tools I use on a regular basis.
 * Multiple Java JDKs installed side by side and quick switch between them with a jset alias
+* A fancy prompt
 * Includes bash-git-prompt-hook
 
 ## Usage

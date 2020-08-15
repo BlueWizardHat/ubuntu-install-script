@@ -30,3 +30,6 @@
 
   - name: Virtualbox
     apt: name=virtualbox state=latest
+
+  - name: Install Visual Studio Code
+    shell: snap install --classic code
