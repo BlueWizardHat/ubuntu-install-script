@@ -27,8 +27,8 @@
     when: item.creates is defined and item.tar is defined
 
   - name: Create symlinks for openjdk JDKs
-    file: src="{{ item.creates }}" dest="{{ openjdk_hotspot_install_path }}/{{ item.link }}" state=link
-    with_items: "{{ hotspot_jdks }}"
+    file: src="{{ item.creates }}" dest="{{ openjdk_install_path }}/{{ item.link }}" state=link
+    with_items: "{{ openjdk_jdks }}"
     when: item.link is defined
 
   ## Eclipse Adoptium / AdoptOpenJDK JDKs (hotspot VM)
